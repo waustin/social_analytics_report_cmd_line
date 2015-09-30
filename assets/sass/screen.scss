@@ -1,0 +1,97 @@
+@import "partials/base";
+
+.main-header {
+    @extend %wrapper;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $MEDIUM_GREY;
+}
+.primary-nav {
+    @extend %wrapper;
+    background-color: $DARK_GREY;
+    $border-color: rgba(lighten($DARK_GREY, 20%), 0.3);
+    ul {
+        @extend %horizontal-nav;
+        text-transform: uppercase;
+        li {
+            border-right: 1px solid $border-color;
+            &:first-child {
+                border-left: 1px solid $border-color;
+            }
+        }
+        li a {
+            display: block;
+            padding: 15px 18px;
+        }
+    }
+    a {
+        text-decoration: none;
+        font-weight: bold;
+    }
+}
+
+.page-header {
+    margin-bottom: 20px;
+    h1 {
+        @include font-size(2.8);
+        margin-bottom: 0;
+    }
+}
+.main-content-wrapper {
+    @extend %wrapper;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    @include respond-to("min-width: " + $SMALL_SCREEN_WIDTH) {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    @include respond-to("min-width: " + $MEDIUM_SCREEN_WIDTH) {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    @include respond-to("min-width: " + $LARGE_SCREEN_WIDTH) {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+}
+
+.sub-nav {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 500px;
+    border: 1px solid $LIGHT_GREY;
+    padding: 20px;
+
+    .sub-nav-title {
+        @include font-size(1.8);
+        font-weight: bold;
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        @include font-size(1.6);
+        li.selected a {
+
+        }
+        a {
+            display: block;
+            line-height: 1.25;
+        }
+    }
+}
+
+.main-footer {
+    @extend %wrapper;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid $MEDIUM_GREY;
+    .copyright {
+        @include font-size(1.1);
+        margin-bottom: 0;
+    }
+}
+
+@import "partials/form";
+@import "partials/pagination";
+@import "partials/page_content";

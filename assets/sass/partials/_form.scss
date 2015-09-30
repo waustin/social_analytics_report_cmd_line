@@ -1,0 +1,54 @@
+label {
+	color: $DARK_GREY;
+	text-transform: uppercase;
+	display: block;
+	margin-bottom: 7px;
+	@include heading-font();
+}
+input[type=text], input[type=email], input[type=password], textarea, select {
+	border: 1px solid $MEDIUM_GREY;
+	background-color: white;
+	@include font-size(1.6);
+	padding: 5px 10px;
+	width: 100%;
+	color: $MEDIUM_GREY;
+	@include heading-font();
+	@include border-radius(0);
+	@include transition(background-color ease-out 0.3s);
+	&:focus {
+		outline: none;
+		border: 1px solid $MEDIUM_GREY;
+		background-color: #FAF1EB;
+		color: $BLACK;
+	}
+}
+
+input[type=text], input[type=email], input[type=password], select {
+	height: 40px;
+}
+.control-group, .form-group {
+	margin-bottom: 30px;
+}
+.form-group .help-block {
+	font-style: italic;
+
+}
+.form-group.has-error {
+	border: 1px solid $ERR_COLOR;
+	padding: 10px 20px;
+	span.help-block {
+		// I think this is the difference in help vs error text
+		color: $ERR_COLOR;
+		display: block;
+		font-style: normal;
+		padding: 5px 0;
+	}
+}
+
+button, input[type=submit], .button {
+	@include button($BLUE, white);
+	outline: none;
+}
+.hp-field {
+	display: none;
+}

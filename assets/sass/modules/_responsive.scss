@@ -1,0 +1,14 @@
+// SCREEN BREAK POINTS
+$GIANT_SCREEN_WIDTH: 1400px;
+$LARGE_SCREEN_WIDTH: 1200px;
+$MEDIUM_LARGE_SCREEN_WIDTH: 960px;
+$MEDIUM_SCREEN_WIDTH: 860px; //ipad 768
+$SMALL_SCREEN_WIDTH: 770px;
+$VERY_SMALL_SCREEN_WIDTH: 450px;
+
+@mixin respond-to($width) {
+    @media screen and ($width) {
+        @content;
+    }
+}
+

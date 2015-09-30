@@ -1,0 +1,68 @@
+@import "reset";
+@import "compass/typography/lists";
+@import "compass/css3";
+
+$border-radius: 4px;
+
+@import "modules/colors";
+@import "modules/fonts";
+@import "modules/shadows";
+@import "modules/responsive";
+@import "modules/helpers";
+@import "modules/layout";
+
+// Turn on border box sizing
+*, *:before, *:after {
+        @include box-sizing(border-box);
+}
+
+html {
+    font-size: 62.5%; /* 10/16 make - this make em/rem math a power of 10 */
+}
+
+body {
+    @include font-size(1.6);
+    min-width: 240px;
+	font-family: $SANS_SERIF_FONT_STACK;
+    color: $TXT_COLOR;
+}
+
+header, footer, nav, aside, article, section {
+    display: block;
+}
+
+img, object, video, media, embed {
+    max-width: 100%;
+    height: auto;
+}
+iframe {
+    max-width: 100%;
+}
+
+a {
+    color: $LINK_COLOR;
+    &:hover { color: darken($LINK_COLOR, 20%); }
+}
+h1, h2, h3, h4, h5, h6 {
+    @include heading-font();
+    color: $TXT_COLOR;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a {
+    text-decoration: none;
+}
+
+
+// CHROME FRAME
+.chromeframe {
+    padding: 20px 0;
+    text-align: center;
+    background-color: $YELLOW;
+    color: $BLACK;
+    font-size: 1.2em;
+    position: relative;
+    z-index: 1000;
+    p {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+}

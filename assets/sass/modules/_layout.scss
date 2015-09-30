@@ -1,0 +1,50 @@
+$WRAPPER_PADDING: 6%;
+%wrapper {
+    padding: 0 $WRAPPER_PADDING;
+    @include clearfix();
+    position: relative;
+}
+
+%sidebar {
+    position: relative;
+	float: left;
+	width: 28%;
+	margin-left: 12%;
+    min-height: 1px; // prevent horizontal collapse
+
+	@include respond-to("max-width:" + $SMALL_SCREEN_WIDTH) {
+		width: auto;
+		float: none;
+		margin-left: 0;
+		margin-bottom: 30px;
+		padding-bottom: 30px;
+		border-bottom: 1px solid $LIGHT_GREY;
+	}
+
+}
+%main-column {
+	float: left;
+	width: 60%;
+    min-height: 1px; // prevent horizontal collapse
+	@include respond-to("max-width:" + $SMALL_SCREEN_WIDTH) {
+		width: auto;
+		float: none;
+	}
+}
+
+// 2 column layout class
+.two-column-layout {
+    @include clearfix();
+	.sidebar {
+		@extend %sidebar;
+	}
+	.main-column {
+		@extend %main-column;
+	}
+}
+
+.one-column-narrow-layout .main-column {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}

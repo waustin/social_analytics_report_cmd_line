@@ -60,8 +60,6 @@ def analyze_fb_page_data(page_file):
                 'impressions': safe_cast(r[IMPRESSIONS], int, 0)
             })
 
-            print("Processing record {0}".format(idx+1))
-
     start_date = min(data, key=lambda i: i['date'])['date']
     end_date = max(data, key=lambda i: i['date'])['date']
 
@@ -90,7 +88,7 @@ def analyze_fb_page_data(page_file):
 
     template = template.encode('utf-8')
 
-    print("Generating FB Page Report")
+    print("Generating FB Page Report {0}".format(FB_PAGE_REPORT_OUT_NAME))
 
     with open(FB_PAGE_REPORT_OUT_NAME, "wb") as outf:
         outf.write(template)
@@ -119,8 +117,6 @@ def analyze_fb_post_data(post_file):
                 'totalreach': int(r[TOTAL_REACH]),
                 'impressions': int(r[IMPRESSIONS])})
 
-            print("Processing FB Post Record {0}".format(idx+1))
-
     start_date = min(post_data, key=lambda i: i['pubdate'])['pubdate']
     end_date = max(post_data, key=lambda i: i['pubdate'])['pubdate']
 
@@ -133,7 +129,7 @@ def analyze_fb_post_data(post_file):
 
     template = template.encode('utf-8')
 
-    print("Generating FB Post Report")
+    print("Generating FB Post Report {0}".format(FB_POST_REPORT_OUT_NAME))
 
     with open(FB_POST_REPORT_OUT_NAME, "wb") as outf:
         outf.write(template)
@@ -149,19 +145,28 @@ def main():
 
     args = parser.parse_args()
 
+    if not args.pagecsv and not args.postcsv:
+        sys.stderr.write("Either FB Page Data File or Post Data File Requred\n")
+        parser.print_help()
+        return 2
+
+    # If page data file provided process it
     if args.pagecsv:
+        if not os.path.exists(args.pagecsv):
+            print 'FB Page Date File {0} does not exist.'.format(args.pagecsv)
+            return -1
 
-        print args.pagecsv
+        analyze_fb_page_data(args.pagecsv)
 
+    # If post data file provided process it
     if args.postcsv:
-        print args.postcsv
+        if not os.path.exists(args.postcsv):
+            print 'FB Post Data File {0} does not exist'.format(args.postcsv)
+            return -1
+
+        analyze_fb_post_data(args.postcsv)
 
     return 0
-
-    analyze_fb_page_data(args.pagecsv)
-    analyze_fb_post_data(args.postcsv)
-
-    return 1
 
 
 if __name__ == '__main__':
