@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Facebook Post Report {{start_date.strftime("%m/%d/%Y")}} &mdash; {{end_date.strftime("%m/%d/%Y")}}</title>
+        <style>
+            html {
+                font-size: 62.5%;
+            }
+            body {
+                font-size: 1.6rem;
+                font-family: 'Verdana', 'Arial', sans-serif;
+            }
+            .wrapper {
+                padding: 0 6%;
+                position: relative;
+            }
+            .main-content-wrapper {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+
+            }
+            th, td {
+                padding: 0.5rem;
+                text-align: left;
+                border: 1px solid #CCC;
+                line-height: 1.5;
+            }
+            tbody tr:nth-child(odd) {
+                background: #eee;
+            }
+            th {
+                text-align: left;
+                text-transform: uppercase;
+            }
+            .col-message {
+                width: 500px;
+            }
+            .col-pubdate {
+                width: 100px;
+            }
+            .col-reach, .col-impressions {
+                text-align: right;
+                width: 100px;
+            }
+            th.col-reach, th.col-impressions {
+                text-align: center;
+            }
+            .col-counter {
+                text-align: right;
+                width: 50px;
+            }
+            .col-reach {
+                color: red;
+            }
+
+            h1, h2, h3, h4, h5 {
+                font-weight: normal;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper main-content-wrapper">
+            <h1>Top Facebook Posts for: {{start_date.strftime("%-m/%-d/%Y")}} &mdash; {{end_date.strftime("%-m/%-d/%Y")}}</h1>
+            <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="col-message">
+                        Message
+                    </th>
+                    <th class="col-pubdate">
+                        Date Posted
+                    </th class="col-reach">
+                    <th>
+                        Total Reach
+                    </th>
+                    <th class="col-impressions">
+                        Total Impressions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in top_posts %}
+                <tr>
+                    <th class="col-counter">{{loop.index}}</th>
+                    <td class="col-message">{{row.message}}</td>
+                    <td class="col-pubdate">{{row.pubdate.strftime("%m/%d/%Y")  }}</td>
+                    <td class="col-reach">{{ '{0:,}'.format(row.totalreach) }}</td>
+                    <td class="col-impressions">{{ '{0:,}'.format(row.impressions) }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </body>
+</html>

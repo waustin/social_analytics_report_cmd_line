@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Facebook Page Report {{start_date.strftime("%m/%d/%Y")}} &mdash; {{end_date.strftime("%m/%d/%Y")}}</title>
+        <script src="./assets/js/Chart.min.js"></script>
+        <link href="./assets/js/c3.css" rel="stylesheet" type="text/css">
+        <script src="./assets/js/c3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+        <style>
+            html {
+                font-size: 62.5%;
+            }
+            body {
+                font-size: 1.6rem;
+                font-family: 'Verdana', 'Arial', sans-serif;
+            }
+            .wrapper {
+                padding: 0 6%;
+                position: relative;
+            }
+            .main-content-wrapper {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+
+            }
+            th, td {
+                padding: 0.5rem;
+                text-align: left;
+                border: 1px solid #CCC;
+                line-height: 1.5;
+            }
+            tbody tr:nth-child(odd) {
+                background: #eee;
+            }
+            th {
+                text-align: left;
+                text-transform: uppercase;
+            }
+            .col-message {
+                width: 500px;
+            }
+            .col-pubdate {
+                width: 100px;
+            }
+            .col-reach, .col-impressions {
+                text-align: right;
+                width: 100px;
+            }
+            th.col-reach, th.col-impressions {
+                text-align: center;
+            }
+            .col-counter {
+                text-align: right;
+                width: 50px;
+            }
+            .col-reach {
+                color: red;
+            }
+
+            h1, h2, h3, h4, h5 {
+                font-weight: normal;
+            }
+        </style>
+        <!--
+        <script>
+
+            var lineChartData = {
+
+                labels : {{chart_labels}},
+                datasets : [
+                    {
+                        label: "Facebook Impressions",
+                        fillColor : "rgba(225,225,250,0.0)",
+                        strokeColor : "rgba(120, 120, 120, 1)",
+                        pointColor : "rgba(70,80,70,1)",
+                        pointStrokeColor : "#fff",
+                        pointHighlightFill : "#fff",
+                        pointHighlightStroke : "rgba(220,220,220,1)",
+                        data: {{chart_data}},
+                    },
+                ]
+            }
+
+            window.onload = function() {
+                var ctx = document.getElementById("canvas").getContext("2d");
+                window.myLine = new Chart(ctx).Line(lineChartData, {
+                    responsive: true,
+                    bezierCurve : true,
+                    //pointDotRadius: 5,
+                    scaleLabel: function(label){return  label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+                    //scaleOverride: true,
+                    //scaleSteps: 10,
+                    //scaleStepWidth: 2000
+                });
+            }
+        </script>
+-->
+    </head>
+    <body>
+        <div class="wrapper main-content-wrapper">
+            <h1>Facebook Page Report for: {{start_date.strftime("%-m/%-d/%Y")}} &mdash; {{end_date.strftime("%-m/%-d/%Y")}}</h1>
+
+            <div style="width:75%; background-color: white; margin-left: auto; margin-right: auto;">
+            <!--
+            <div>
+                <canvas id="canvas" height="400" width="600"></canvas>
+            </div>
+            -->
+
+            <h3 class="chart-title">User Activity</h3>
+            <div id="engage-chart"></div>
+            <script>
+                var chart = c3.generate({
+                    bindto: '#engage-chart',
+                    data: {
+                        x: 'date',
+                        xFormat: '%m/%d/%Y',
+                        columns: [
+                            ['date'].concat({{chart_labels}}),
+                            {{reach}},
+                            {{impressions}},
+                            {{engaged}},
+                        ]
+                    },
+                    point: {
+                        show: false
+                    },
+                    axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%m/%d/%Y'
+                            }
+                        },
+                        y: {
+                            tick: {
+                                format: d3.format(',')
+                            }
+                        }
+                    }
+                });
+            </script>
+
+            <hr/>
+
+            <h3 class="chart-title">Page Likes</h3>
+            <div id="likes-chart"></div>
+            <script>
+                    var chart = c3.generate({
+                        bindto: '#likes-chart',
+                        data: {
+                            x: 'date',
+                            xFormat: '%m/%d/%Y',
+                            columns: [
+                                ['date'].concat({{chart_labels}}),
+                                {{likes}}
+                            ]
+                        },
+                        point: {
+                            show: false
+                        },
+                        axis: {
+                            x: {
+                                type: 'timeseries',
+                                tick: {
+                                    format: '%m/%d/%Y'
+                                }
+                            },
+                            y: {
+                                tick: {
+                                    format: d3.format(',')
+                                }
+                            }
+                        }
+                    });
+                </script>
+        </div>
+
+        </div>
+    </body>
+</html>
