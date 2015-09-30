@@ -1,8 +1,10 @@
 #!/usr/bin/env python
+import argparse
 import os
 import sys
 import csvkit
 import datetime
+
 # from pprint import pprint
 
 # import pygal
@@ -15,13 +17,6 @@ TEMPLATE_ENV = Environment(
     autoescape=False,
     loader=FileSystemLoader(TEMPLATE_DIR),
     trim_blocks=False)
-
-# Data Files
-#FB_PAGE_FILE = os.path.join('..', 'sample_data', 'FB-Page-Caboodles-201506-201508.csv')
-#FB_POST_FILE = os.path.join('..', 'sample_data', 'FB-Post-Caboodles-201506-201508.csv')
-
-FB_PAGE_FILE = os.path.join('..', 'sample_data', 'fb-page-bacon-fest-2015-09-24.csv')
-FB_POST_FILE = os.path.join('..', 'sample_data', 'fb-post-bacon-fest-2015-09-24.csv')
 
 # Report Templates
 FB_POST_TMPL = "post_report.html"
@@ -42,7 +37,7 @@ def render_template(template_filename, context):
     return TEMPLATE_ENV.get_template(template_filename).render(context)
 
 
-def analyze_fb_page_data(page_file=FB_PAGE_FILE):
+def analyze_fb_page_data(page_file):
     print("Analying Facebook Page file {0}".format(page_file))
     DATE = 0
     TOTAL_LIKES = 1
@@ -101,7 +96,7 @@ def analyze_fb_page_data(page_file=FB_PAGE_FILE):
         outf.write(template)
 
 
-def analyze_fb_post_data(post_file=FB_POST_FILE):
+def analyze_fb_post_data(post_file):
     PERMALINK = 1
     MESSAGE = 2
     POST_DATE = 6
@@ -146,12 +141,25 @@ def analyze_fb_post_data(post_file=FB_POST_FILE):
     return 0
 
 
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
+def main():
+    parser = argparse.ArgumentParser()
 
-    analyze_fb_page_data()
-    analyze_fb_post_data()
+    parser.add_argument('--pagecsv', help='Facebook Page CSV Data File')
+    parser.add_argument('--postcsv', help='Facebook Post CSV Data File')
+
+    args = parser.parse_args()
+
+    if args.pagecsv:
+
+        print args.pagecsv
+
+    if args.postcsv:
+        print args.postcsv
+
+    return 0
+
+    analyze_fb_page_data(args.pagecsv)
+    analyze_fb_post_data(args.postcsv)
 
     return 1
 
