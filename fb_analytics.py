@@ -20,10 +20,10 @@ TEMPLATE_ENV = Environment(
 
 # Report Templates
 FB_POST_TMPL = "post_report.html"
-FB_POST_REPORT_OUT_NAME = "fb_post_report_out.html"
+FB_POST_REPORT_OUT_NAME = os.path.join("reportout", "fb_post_report_out.html")
 
 FB_PAGE_TMPL = "page_report.html"
-FB_PAGE_REPORT_OUT_NAME = "fb_page_report_out.html"
+FB_PAGE_REPORT_OUT_NAME = os.path.join("reportout", "fb_page_report_out.html")
 
 
 def safe_cast(val, to_type, default=None):
